@@ -1,2 +1,2 @@
-# pfch
-Programming for Cultural Heritage class project
+# NYC Recycle Rate
+Final project for Cultural Heritage class project
