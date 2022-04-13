@@ -1,7 +1,6 @@
 import plotly.express as px
 import csv
 import pandas as pd
-import re
 
 # NYC solid waste management dataset from NYC Open Data
 # https://data.cityofnewyork.us/City-Government/DSNY-Monthly-Tonnage-Data/ebb7-mvp5
