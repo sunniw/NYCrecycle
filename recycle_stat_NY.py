@@ -37,12 +37,14 @@ NYCmswTotal.reset_index(drop=True, inplace=True)
 # 2) Calculate the percentage of each type of MSW
 
 # Ignore year when doing sums across rows
-p_cols = list(NYCmswTotal)
-p_cols.remove("YEAR")
+NYCp_cols = list(NYCmswTotal)
+NYCp_cols.remove("YEAR")
 
-NYCmswTotal["MSW TOTAL"] = NYCmswTotal[p_cols].sum(axis=1)
+NYCmswTotal["MSW TOTAL"] = NYCmswTotal[NYCp_cols].sum(axis=1)
 NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
 NYCmswTotal["MSP COLLECTED"] = NYCmswTotal["MGPTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
-NYCmswTotal["NON-RECYCLE COLLECTED"] = NYCmswTotal["REFUSETONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
+NYCmswTotal["NON-RECYCLED & OTHERS"] = 100 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MSP COLLECTED"]
 
-print(NYCmswTotal)
+# Show NYC bar chart
+fig = px.bar(NYCmswTotal, x="YEAR", y=["PAPER COLLECTED", "MSP COLLECTED", "NON-RECYCLED & OTHERS"])
+fig.show()
