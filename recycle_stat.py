@@ -1,20 +1,22 @@
-import plotly.express as px
 import csv
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 
+# =================================================================================
 # National solid waste management dataset from EPA
-# https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=C9310A59-16D2-4002-B36B-2B0A1C637D4E
-# Credit to Professor Matt Miller for initial convertion of the CSV 
-# to a dictionary that could be visualized with the Plotly module.
-# Further effort has been made to remove data that are out of the 
-# scope of this project.
+# https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=C9310A5s-16D2-4002-B36B-2B0A1C637D4E
+# Credit to Professor Matt Miller for initial conversion of the CSV to a dictionary 
+# that could be visualized with the Plotly module.
+# Further effort has been made to focus on data necessary for this project.
+# =================================================================================
 
-with open("National_MSW_total.csv","r") as USmswTotal_csv:
-    reader = csv.DictReader(USmswTotal_csv)
+with open("National_MSW_total.csv", "r") as USmswOriginal_csv:
+    reader = csv.DictReader(USmswOriginal_csv)
 
-    USmswTotal = {}
+    USmswOriginal = {}
 
-    # Select data to be included in the USmswTotal{}
+    # Select data to be included in the USmswOriginal{}
     for row in reader:
         if "Materials" in row:
 
@@ -24,128 +26,189 @@ with open("National_MSW_total.csv","r") as USmswTotal_csv:
 
                     # Read and create keys with year values from the first row
                     if year != "Materials":
-                        
-                        # Take data from 2010
+
+                        # Take only data from 2010
                         if int(year) >= 2010:
-                            if year not in USmswTotal:
-                                USmswTotal[year] = {"year" : year}
-                            
+                            if year not in USmswOriginal:
+                                USmswOriginal[year] = {"year": year}
+
                             # Add corresponding materials as keys and their values to each year
-                            USmswTotal[year][row["Materials"]] = row[year]
-   
-    #print(USmswTotal)
+                            USmswOriginal[year][row["Materials"]] = row[year]
+
+    #print(USmswOriginal)
 
     # Calculate percentage and write to new file
-    for year in USmswTotal:
-        year_total = int(USmswTotal[year]["Total MSW Generated - Weight"])
-        
-        paper_pt = int(USmswTotal[year]["Products - Paper and Paperboard"])/year_total*100
-        USmswTotal[year]["Products - Paper and Paperboard"] = paper_pt
-        
-        glass_pt = int(USmswTotal[year]["Products - Glass"])/year_total*100
-        USmswTotal[year]["Products - Glass"] = glass_pt
+    for year in USmswOriginal:
+        year_total = int(USmswOriginal[year]["Total MSW Generated - Weight"])
 
-        metal_pt = int(USmswTotal[year]["Products - Metals - Total"])/year_total*100
-        USmswTotal[year]["Products - Metals - Total"] = metal_pt
+        paper_pt = int(USmswOriginal[year]["Products - Paper and Paperboard"])/year_total*100
+        USmswOriginal[year]["Products - Paper and Paperboard"] = paper_pt
 
-        plastic_pt = int(USmswTotal[year]["Products - Plastics"])/year_total*100
-        USmswTotal[year]["Products - Plastics"] = plastic_pt
+        glass_pt = int(USmswOriginal[year]["Products - Glass"])/year_total*100
+        USmswOriginal[year]["Products - Glass"] = glass_pt
+
+        metal_pt = int(USmswOriginal[year]["Products - Metals - Total"])/year_total*100
+        USmswOriginal[year]["Products - Metals - Total"] = metal_pt
+
+        plastic_pt = int(USmswOriginal[year]["Products - Plastics"])/year_total*100
+        USmswOriginal[year]["Products - Plastics"] = plastic_pt
 
         notRecycled_pt = 100-paper_pt-glass_pt-metal_pt-plastic_pt
-        USmswTotal[year]["Not recycled"] = notRecycled_pt
+        USmswOriginal[year]["Non-Recyclable & Others"] = notRecycled_pt
 
     # Remove unwanted data
-    for year in USmswTotal:
-        for p in ["Products - Metals - Ferrous", "Products - Metals - Aluminum", "Products - Metals - OtherNonferrous", "Products - Rubber and Leather", "Products - Textiles", "Products - Wood", "Products - Other", "Products - Total Materials", "Other Wastes - Food Waste", "Other Wastes - Yard Trimmings", "Other Wastes - Miscellaneous Inorganic Wastes", "Other Wastes - Total", "Total MSW Generated - Weight"]:
-            USmswTotal[year].pop(p)
+    for year in USmswOriginal:
+        for p in ["Products - Metals - Ferrous", "Products - Metals - Aluminum",
+                  "Products - Metals - OtherNonferrous", "Products - Rubber and Leather",
+                  "Products - Textiles", "Products - Wood", "Products - Other",
+                  "Products - Total Materials", "Other Wastes - Food Waste",
+                  "Other Wastes - Yard Trimmings", "Other Wastes - Miscellaneous Inorganic Wastes",
+                  "Other Wastes - Total", "Total MSW Generated - Weight"]:
+            USmswOriginal[year].pop(p)
 
     # Write to new csv for plotly
-    with open("USmswTotal_p.csv","w") as outfile:
-        
+    with open("USmswTotal_p.csv", "w") as outfile:
+
         # Create a list of keys from any of the years for headers
-        fieldnames = list(USmswTotal["2010"])
+        fieldnames = list(USmswOriginal["2010"])
         writer = csv.DictWriter(outfile, fieldnames=fieldnames)
         writer.writeheader()
 
         # Populate data in rows
-        for year in USmswTotal:
-            writer.writerow(USmswTotal[year])
+        for year in USmswOriginal:
+            writer.writerow(USmswOriginal[year])
 
-# Create a list of years by listing the first element's value of each dictionary
-years = list(USmswTotal)
-#print(years)
+# Read new csv for building the bar chart
+USmswTotal = pd.read_csv("USmswTotal_p.csv")
 
-# Create a list of materials like creating the header list in outputting the new csv file
-materials = list(USmswTotal["2010"])
-#print(materials)
-materials.remove("year")
+# Rename columns' name
+USmswTotal.rename(columns={
+    "year": "YEAR",
+    "Products - Paper and Paperboard": "PAPER COLLECTED",
+    "Products - Glass": "GLASS COLLECTED",
+    "Products - Metals - Total": "METALS COLLECTED",
+    "Products - Plastics": "PLASTICS COLLECTED",
+    "Non-Recyclable & Others": "NON-RECYCLED & OTHERS"
+}, inplace=True)
 
-data = pd.read_csv("USmswTotal_p.csv")
+# Swap plastic and paper columns
+cols = list(USmswTotal.columns)
+a, b = cols.index("GLASS COLLECTED"), cols.index("PLASTICS COLLECTED")
+cols[a], cols[b] = cols[b], cols[a]
+USmswTotal = USmswTotal[cols]
 
-print(data)
+# Selecting columns to compare
+USp_cols = list(USmswTotal)
+USp_cols.remove("YEAR")
 
+# =================================================================================
+# NYC solid waste management dataset from NYC Open Data
+# https://data.cityofnewyork.us/City-Government/DSNY-Monthly-Tonnage-Data/ebb7-mvp5
+# =================================================================================
 
+NYCmswOriginal = pd.read_csv("DSNY_Monthly_Tonnage_Data.csv")
 
-# This one works. Just to hide temperary to save time
-fig = px.bar(data, x=years, y=materials)
+# Drop columns of borough information
+rm_borough = ["BOROUGH", "COMMUNITYDISTRICT", "BOROUGH_ID"]
+for rm in rm_borough:
+    NYCmswOriginal = NYCmswOriginal.drop(columns=rm)
+
+# Remove month from date and create a year column
+year = pd.to_datetime(NYCmswOriginal["MONTH"])
+NYCmswOriginal["YEAR"] = year.dt.year
+NYCmswOriginal = NYCmswOriginal.drop(columns="MONTH")
+
+# Reorder columns so to have YEAR as the first column
+cols = list(NYCmswOriginal.columns)
+NYCmswOriginal = NYCmswOriginal[[cols[-1]] + cols[0:-1]]
+
+# Get the sum of each type of MSW by year and output result as a new csv
+nyc = NYCmswOriginal.groupby("YEAR").sum()
+nyc.to_csv("NYCmswTotal_p.csv")
+
+# Read new csv for further analysis
+NYCmswTotal = pd.read_csv("NYCmswTotal_p.csv")
+
+# Keep only data from 2010
+NYCmswTotal = NYCmswTotal[20:]
+NYCmswTotal.reset_index(drop=True, inplace=True)
+
+# 1) Calculate the total tonnage of MSW of each year
+# 2) Calculate the percentage of each type of MSW
+
+# Ignore year when doing sums across rows
+NYCp_cols = list(NYCmswTotal)
+NYCp_cols.remove("YEAR")
+
+NYCmswTotal["MSW TOTAL"] = NYCmswTotal[NYCp_cols].sum(axis=1)
+NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
+NYCmswTotal["MGP COLLECTED"] = NYCmswTotal["MGPTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
+NYCmswTotal["NON-RECYCLED & OTHERS"] = 100 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MGP COLLECTED"]
+
+# =================================================================================
+# Combine two stacked bar charts together by using subgroups.
+# Based on Stackoverflow answer https://stackoverflow.com/a/65314442
+# =================================================================================
+
+USNY = pd.DataFrame(
+    dict(
+        year = NYCmswTotal["YEAR"][0:9].tolist(),
+        USpaper = USmswTotal["PAPER COLLECTED"].tolist(),
+        USplastic = USmswTotal["PLASTICS COLLECTED"].tolist(),
+        USmetal = USmswTotal["METALS COLLECTED"].tolist(),
+        USglass = USmswTotal["GLASS COLLECTED"].tolist(),
+        USnon_recycle = USmswTotal["NON-RECYCLED & OTHERS"].tolist(),
+        NYCpaper = NYCmswTotal["PAPER COLLECTED"][0:9].tolist(),
+        NYCmsw = NYCmswTotal["MGP COLLECTED"][0:9].tolist(),
+        NYCnon_recycle = NYCmswTotal["NON-RECYCLED & OTHERS"][0:9].tolist(),
+    )
+)
+
+fig = go.Figure()
+
+fig.update_layout(
+    title = "Comparing Municipal Recyclable and Waste Collection Rate of NYC with US",
+    xaxis = dict(title_text = "Year"),
+    yaxis = dict(title_text = "Percentage"),
+    barmode = "stack",
+)
+
+# Sequence is important
+groups = ["USpaper", "USplastic", "USmetal", "USglass", "USnon_recycle", "NYCpaper", "NYCmsw", "NYCnon_recycle"]
+names = ["US Paper", "US Plastic", "US Metal", "US Glass", "US Non-Recycle", "NYC Paper", "NYC Plastic", "NYC Non-Recycle"]
+colors = {"USpaper" : "#7AC142",
+          "USplastic" : "#0093D0",
+          "USglass" : "#46A7D1",
+          "USmetal" : "#8BBCD1",
+          "USnon_recycle" : "#FFA15A",
+          "NYCpaper" : "#7AC142",
+          "NYCmsw" : "#0093D0",
+          "NYCnon_recycle" : "#FFA15A"}
+
+i = 0
+for r,n,c in zip(groups,names,colors.values()):
+    if i <= 4:
+        fig.add_trace(
+            go.Bar(x=[USNY.year, ["US"]*len(USNY.year)], 
+                   y=USNY[r], 
+                   name=n, 
+                   marker_color=c,
+                   text=["%.2f" % n for n in USNY[r]],
+                   marker_pattern_shape = ["."] * 9,
+                   marker_pattern_fgcolor = ["#ffffff"] * 9,
+                   marker_pattern_solidity = [0.05] * 9
+                   ),
+        )
+        #"{:,.2%}".format(USNY[r])
+    else:
+        fig.add_trace(
+            go.Bar(x=[USNY.year, ["NYC"]*len(USNY.year)], 
+                   y=USNY[r], 
+                   name=n, 
+                   marker_color=c,
+                   text=["%.2f" % n for n in USNY[r]],
+                   ),
+        )
+    i += 1
+
 fig.show()
-
-
-
-
-# data = pd.read_csv("National_MSW_total.csv", skipfooter=3, index_col=0)
-# #data = data.reset_index(drop=True)
-# print(data)
-
-# Before transpose: make column headers as a list
-# year = list(data.columns.values)
-# year = year[7:]
-#print(year)
-
-# Before transpose: select materials
-# materials = list(data["Materials"].values)
-# materials = materials[0], materials[1], materials[5], materials[6], materials[11]
-# print(materials)
-
-# Try convert columns to rows and see if the bars can be base on year.
-
-# dataT = data.transpose()
-# dataT = dataT.reset_index()
-# print(dataT)
-# # print(dataT[1])
-
-# materials = "Products - Paper and Paperboard|Products - Glass|Products - Metals - Total|Products - Plastics"
-
-# fig = px.bar(dataT, x=data.iloc[6:], y="Products - Plastics")
-# fig.show()
-
-# Before transpose: not good bar chart
-# fig = px.bar(data, x=year, y="Materials")
-
-# Not successful
-# fig = px.bar(data,x=year,y=[list(materials)])
-
-# fig = px.bar(dataT, x=dataT.iloc[7:16],
-#              y="Products - Glass|Products - Metals - Total")
-# fig.show()
-
-
-
-#print(data["Materials"])     #use header key for column
-#print(data.loc[1])      #use loc for rows
-#print(data.loc[3,"1960"])  #Specific cell, .loc[row, col]
-#print(data["1960"].loc[3] + data["1960"].loc[4])   #calculate specific cells
-
-
-#print(data)
-
-#for yr in data[""]
-
-# National MSW numbers (tons):
-# Products - Paper and Paperboard [0]
-# Products - Glass [1]
-# Products - Metals - Total [5]
-# Products - Plastics [6]
-# Products - Other Recyclable = Total Materials [11] - Above four
-# Total MSW Generated-Weight [16] = Total Materials + Other Wastes-Total [15]
-
