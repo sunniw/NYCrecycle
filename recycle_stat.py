@@ -185,28 +185,29 @@ colors = {"USpaper" : "#7AC142",
           "NYCmsw" : "#0093D0",
           "NYCnon_recycle" : "#FFA15A"}
 
+repeat = len(USNY.year)
+
 i = 0
 for r,n,c in zip(groups,names,colors.values()):
     if i <= 4:
         fig.add_trace(
-            go.Bar(x=[USNY.year, ["US"]*len(USNY.year)], 
+            go.Bar(x=[USNY.year, ["US"] * repeat], 
                    y=USNY[r], 
                    name=n, 
                    marker_color=c,
-                   text=["%.2f" % n for n in USNY[r]],
-                   marker_pattern_shape = ["."] * 9,
-                   marker_pattern_fgcolor = ["#ffffff"] * 9,
-                   marker_pattern_solidity = [0.05] * 9
+                   text=["%.1f%%" % n for n in USNY[r]],
+                   marker_pattern_shape = ["."] * repeat,
+                   marker_pattern_fgcolor = ["#ffffff"] * repeat,
+                   marker_pattern_solidity = [0.05] * repeat
                    ),
         )
-        #"{:,.2%}".format(USNY[r])
     else:
         fig.add_trace(
-            go.Bar(x=[USNY.year, ["NYC"]*len(USNY.year)], 
+            go.Bar(x=[USNY.year, ["NYC"] * repeat], 
                    y=USNY[r], 
                    name=n, 
                    marker_color=c,
-                   text=["%.2f" % n for n in USNY[r]],
+                   text=["%.1f%%" % n for n in USNY[r]],
                    ),
         )
     i += 1
