@@ -33,17 +33,31 @@ NYCmswTotal = NYCmswTotal[20:]
 NYCmswTotal.reset_index(drop=True, inplace=True)
 
 # 1) Calculate the total tonnage of MSW of each year
-# 2) Calculate the percentage of each type of MSW
+# 2) Calculate the percentage of each type of MSW in float number
 
 # Ignore year when doing sums across rows
 NYCp_cols = list(NYCmswTotal)
 NYCp_cols.remove("YEAR")
 
+# Calculate percentage and write to new file
+
 NYCmswTotal["MSW TOTAL"] = NYCmswTotal[NYCp_cols].sum(axis=1)
-NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
-NYCmswTotal["MSP COLLECTED"] = NYCmswTotal["MGPTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
-NYCmswTotal["NON-RECYCLED & OTHERS"] = 100 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MSP COLLECTED"]
+NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"]
+NYCmswTotal["MGP COLLECTED"] = NYCmswTotal["MGPTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"]
+NYCmswTotal["NON-RECYCLED & OTHERS"] = 1 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MGP COLLECTED"]
+
+#print(NYCmswTotal)
+#print(NYCp_cols)
 
 # Show NYC bar chart
-fig = px.bar(NYCmswTotal, x="YEAR", y=["PAPER COLLECTED", "MSP COLLECTED", "NON-RECYCLED & OTHERS"])
+# float number is formatted as % with 2 digits behind decimal
+
+fig = px.bar(NYCmswTotal, 
+        x = "YEAR", 
+        y = ["PAPER COLLECTED", "MGP COLLECTED", "NON-RECYCLED & OTHERS"], 
+        color_discrete_sequence = ["#42C24A", "#2A9FD1", "#FFB47A"],
+        title = "Municipal Recyclable and Waste Collection Rate in New York City",
+        labels = {"value" : "Percentage to total waste", "YEAR" : "Year"}, 
+        text_auto = ".2%")
+
 fig.show()
