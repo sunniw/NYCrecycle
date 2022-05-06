@@ -11,18 +11,20 @@ Contains NYC monthly waste collection data between 1990 and 2022. Besides the tw
 Contains national annual waste collection data from 1960 to 2018. This dataset reflects more specific material types collected in waste stream. To be compared with the NYC data, this project combined the four types of metals into one "metal" category. All other materials, except for paper, glass and plastic, are grouped under "US non-recyclable and others" in the charts.
 
 ### File description
-NYCmswTotal_p.csv - checkpoint dataset created from recycle_stat_NY.py, used to create the final combined chart.
-USmswTotal_p.csv - checkpoint dataset created from recycle_stat_US.py, used to create the final combined chart.
-banner.png - project header image.
-barchart_NY.png - stacked bar chart created from recycle_stat_NY.py.
-barchart_US.png - stacked bar chart created from recycle_stat_US.py.
-barchart_compare.png - combined stacked bar chart created from recycle_stat.py.
-recycle_stat.py - main script to compare NYC and US datasets.
-recycle_stat_NY.py - script using the dataset from NYC Open Data to create a stacked bar chart of the NYC recyclable collection rate.
-recycle_stat_US.py - script using the EPA data to create a stacked bar chart of the national recyclable collection rate.
+File | Description
+---- | -----------
+NYCmswTotal_p.csv | Checkpoint dataset created from recycle_stat_NY.py, used to create the final combined chart.
+USmswTotal_p.csv | Checkpoint dataset created from recycle_stat_US.py, used to create the final combined chart.
+banner.png | Project header image.
+barchart_NY.png | Stacked bar chart created from recycle_stat_NY.py.
+barchart_US.png | Stacked bar chart created from recycle_stat_US.py.
+barchart_compare.png | Combined stacked bar chart created from recycle_stat.py.
+recycle_stat.py | Main script to compare NYC and US datasets.
+recycle_stat_NY.py | Script using the dataset from NYC Open Data to create a stacked bar chart of the NYC recyclable collection rate.
+recycle_stat_US.py | Script using the EPA data to create a stacked bar chart of the national recyclable collection rate.
 
 ### To use the scripts
-All three scripts are written in Python 3 and can be run independently. The resulting charts will be opened in a web browser upon running the scripts. To run locally, please download the two original datasets from sources listed in previous section, the latest version of Python, and the following modules installed:
+All three scripts are written in Python 3 that can be run independently. The resulting charts will be opened in a web browser upon running the scripts. To run locally, please download the two original datasets from sources listed in previous section, the latest version of Python, and the following modules installed:
 - [pandas](https://pandas.pydata.org/getting_started.html) version 1.3.5 or later.
 - [plotly](https://plotly.com/python/getting-started/) version 5.6.0 or later.
 
