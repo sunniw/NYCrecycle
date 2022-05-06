@@ -175,7 +175,7 @@ fig.update_layout(
 
 # Sequence is important
 groups = ["USpaper", "USplastic", "USmetal", "USglass", "USnon_recycle", "NYCpaper", "NYCmsw", "NYCnon_recycle"]
-names = ["US PAPER", "US PLASTIC", "US METAL", "US GLASS", "US NON-RECYCLABLE", "NYC PAPER", "NYC PLASTIC", "NYC NON-RECYCLABLE"]
+names = ["US PAPER", "US PLASTIC", "US METAL", "US GLASS", "US NON-RECYCLABLE & OTHERS", "NYC PAPER", "NYC PLASTIC", "NYC NON-RECYCLABLE & OTHERS"]
 colors = {"USpaper" : "#7AC142",
           "USplastic" : "#0093D0",
           "USglass" : "#46A7D1",
