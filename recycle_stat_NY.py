@@ -56,7 +56,7 @@ fig = px.bar(NYCmswTotal,
         x = "YEAR", 
         y = ["PAPER COLLECTED", "MGP COLLECTED", "NON-RECYCLABLE & OTHERS"], 
         color_discrete_sequence = ["#42C24A", "#2A9FD1", "#FFB47A"],
-        title = "Municipal Recyclable and Waste Collection Rate in New York City",
+        title = "Municipal Recyclable and Waste Collection Rate of the New York City, 2010-2022",
         labels = {"value" : "Percentage to total waste", "YEAR" : "Year"}, 
         text_auto = ".2%")
 

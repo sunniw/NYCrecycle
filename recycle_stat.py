@@ -167,7 +167,7 @@ USNY = pd.DataFrame(
 fig = go.Figure()
 
 fig.update_layout(
-    title = "Comparing Municipal Recyclable and Waste Collection Rate of NYC with US",
+    title = "Comparison of Municipal Recyclable and Waste Collection Rate of NYC and US, 2010-2018",
     xaxis = dict(title_text = "Year"),
     yaxis = dict(title_text = "Percentage"),
     barmode = "stack",

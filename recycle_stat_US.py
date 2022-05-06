@@ -116,6 +116,6 @@ fig = px.bar(USmswTotal,
         y=USp_cols, 
         labels={"value": "Percentage to Total MSW", "YEAR": "Year"}, 
         color_discrete_sequence = [*USbarcolor.values()],
-        title="Municipal Recyclable and Waste Collection Rate in US",
+        title="Municipal Recyclable and Waste Collection Rate of the United States, 2010-2018",
         text_auto=".2%")
 fig.show()
