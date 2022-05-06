@@ -44,7 +44,7 @@ NYCp_cols.remove("YEAR")
 NYCmswTotal["MSW TOTAL"] = NYCmswTotal[NYCp_cols].sum(axis=1)
 NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"]
 NYCmswTotal["MGP COLLECTED"] = NYCmswTotal["MGPTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"]
-NYCmswTotal["NON-RECYCLED & OTHERS"] = 1 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MGP COLLECTED"]
+NYCmswTotal["NON-RECYCLABLE & OTHERS"] = 1 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MGP COLLECTED"]
 
 #print(NYCmswTotal)
 #print(NYCp_cols)
@@ -54,7 +54,7 @@ NYCmswTotal["NON-RECYCLED & OTHERS"] = 1 - NYCmswTotal["PAPER COLLECTED"] - NYCm
 
 fig = px.bar(NYCmswTotal, 
         x = "YEAR", 
-        y = ["PAPER COLLECTED", "MGP COLLECTED", "NON-RECYCLED & OTHERS"], 
+        y = ["PAPER COLLECTED", "MGP COLLECTED", "NON-RECYCLABLE & OTHERS"], 
         color_discrete_sequence = ["#42C24A", "#2A9FD1", "#FFB47A"],
         title = "Municipal Recyclable and Waste Collection Rate in New York City",
         labels = {"value" : "Percentage to total waste", "YEAR" : "Year"}, 

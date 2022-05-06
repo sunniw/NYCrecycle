@@ -88,7 +88,7 @@ USmswTotal.rename(columns={
     "Products - Glass": "GLASS COLLECTED",
     "Products - Metals - Total": "METALS COLLECTED",
     "Products - Plastics": "PLASTICS COLLECTED",
-    "Non-Recyclable & Others": "NON-RECYCLED & OTHERS"
+    "Non-Recyclable & Others": "NON-RECYCLABLE & OTHERS"
 }, inplace=True)
 
 # Swap plastic and paper columns
@@ -143,7 +143,7 @@ NYCp_cols.remove("YEAR")
 NYCmswTotal["MSW TOTAL"] = NYCmswTotal[NYCp_cols].sum(axis=1)
 NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
 NYCmswTotal["MGP COLLECTED"] = NYCmswTotal["MGPTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"] * 100
-NYCmswTotal["NON-RECYCLED & OTHERS"] = 100 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MGP COLLECTED"]
+NYCmswTotal["NON-RECYCLABLE & OTHERS"] = 100 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MGP COLLECTED"]
 
 # =================================================================================
 # Combine two stacked bar charts together by using subgroups.
@@ -157,10 +157,10 @@ USNY = pd.DataFrame(
         USplastic = USmswTotal["PLASTICS COLLECTED"].tolist(),
         USmetal = USmswTotal["METALS COLLECTED"].tolist(),
         USglass = USmswTotal["GLASS COLLECTED"].tolist(),
-        USnon_recycle = USmswTotal["NON-RECYCLED & OTHERS"].tolist(),
+        USnon_recycle = USmswTotal["NON-RECYCLABLE & OTHERS"].tolist(),
         NYCpaper = NYCmswTotal["PAPER COLLECTED"][0:9].tolist(),
         NYCmsw = NYCmswTotal["MGP COLLECTED"][0:9].tolist(),
-        NYCnon_recycle = NYCmswTotal["NON-RECYCLED & OTHERS"][0:9].tolist(),
+        NYCnon_recycle = NYCmswTotal["NON-RECYCLABLE & OTHERS"][0:9].tolist(),
     )
 )
 
@@ -175,7 +175,7 @@ fig.update_layout(
 
 # Sequence is important
 groups = ["USpaper", "USplastic", "USmetal", "USglass", "USnon_recycle", "NYCpaper", "NYCmsw", "NYCnon_recycle"]
-names = ["US Paper", "US Plastic", "US Metal", "US Glass", "US Non-Recycle", "NYC Paper", "NYC Plastic", "NYC Non-Recycle"]
+names = ["US PAPER", "US PLASTIC", "US METAL", "US GLASS", "US NON-RECYCLABLE", "NYC PAPER", "NYC PLASTIC", "NYC NON-RECYCLABLE"]
 colors = {"USpaper" : "#7AC142",
           "USplastic" : "#0093D0",
           "USglass" : "#46A7D1",

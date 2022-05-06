@@ -86,7 +86,7 @@ USmswTotal.rename(columns={
     "Products - Glass" : "GLASS COLLECTED",
     "Products - Metals - Total": "METALS COLLECTED",
     "Products - Plastics" : "PLASTICS COLLECTED",
-    "Non-Recyclable & Others" : "NON-RECYCLED & OTHERS"
+    "Non-Recyclable & Others" : "NON-RECYCLABLE & OTHERS"
     }, inplace=True)
 
 # Swap plastic and paper columns
@@ -109,7 +109,7 @@ USbarcolor = {"PAPER COLLECTED" : "#7AC142",
               "PLASTICS COLLECTED" : "#0093D0",
               "GLASS COLLECTED" : "#46A7D1",
               "METAL COLLECTED" : "#8BBCD1",
-              "NON-RECYCLED & OTHERS" : "#FFA15A"}
+              "NON-RECYCLABLE & OTHERS" : "#FFA15A"}
 
 fig = px.bar(USmswTotal, 
         x="YEAR", 
