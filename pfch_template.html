@@ -57,7 +57,7 @@
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner">
                     <div class="item active">
-                      <img src="[IMAGE NAME HERE]" alt="" title="Cover" />
+                      <img src="https://github.com/sunniw/NYCrecycle/blob/e5a0271c1d5796302f6eef6805c104f78d6893ca/banner.png" alt="" title="Cover" />
                     </div><!-- end item -->
                     </div>
                   <!-- Controls -->
@@ -65,20 +65,28 @@
 
                   </a>
                 </div><!-- end carousel -->
-                <h1>New York Recycle Rate</h1>
+                <h1>New York City Recyclable Collection 2010 - 2018</h1>
               <p class="lead">By: <a href="mailto:swong25@pratt.edu">Sunni Wong</a></p>
               </div><!-- end page-header -->
               <div class="row">
                 <div class="col-md-4">
                   <ul class="list-unstyled post-meta">
-                    <li><a href="LAUNCH PROJECT URL HERE" class="btn btn-default">Launch Project</a></li>
                     <li><a href="https://github.com/sunniw/NYCrecycle/" class="btn btn-default">View on Github</a></li>
                   </ul><!-- end post-meta -->
                 </div><!-- end col -->
                 <div class="col-md-8">
                   <div class="post-content">
                    
-                  [DESC HERE]
+                  This project attempts to look at the New York City recycle rate changes over the last decade. It focuses on the two mainstream recyclables: paper and MGP (metal, glass, and plastic). The project uses the US Environmental Protection Agency's data as a benchmark to measure the effectiveness of the NYC program. Products of this project are three bar charts: NYC collection rate, national collection rate, and a comparison of the two. Please note that the final comparison is only up to 2018, as the EPA data does not provide later years' information.
+                    </br></br>
+                    The three scripts are written in Python, using the pandas and plotly modules. Please see GitHub description.
+                    Dataset used</br>
+1. <a href="https://data.cityofnewyork.us/City-Government/DSNY-Monthly-Tonnage-Data/ebb7-mvp5">DSNY Monthly Tonnage Data</a> - NYC Open Data</br>
+Contains NYC monthly waste collection data between 1990 and 2022. Besides the two mainstream recyclables, this dataset also includes organic materials, which is out of this project's focus. Those data are combined with the trash numbers, and shown as "NYC non-recyclable & others" in the charts.</br>
+2. <a href="https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=C9310A59-16D2-4002-B36B-2B0A1C637D4E">Materials Municipal Waste Stream 1960-2018</a> - United States Environmental Protection Agency</br>
+Contains national annual waste collection data from 1960 to 2018. This dataset reflects more specific material types collected in waste stream. To be compared with the NYC data, this project combined the four types of metals into one "metal" category. All other materials, except for paper, glass and plastic, are grouped under "US non-recyclable and others" in the charts.
+                    </br></br>
+                    
 
                   </div><!-- end col -->
                 </div><!-- end row -->
