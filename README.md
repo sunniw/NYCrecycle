@@ -1,7 +1,7 @@
 # Pratt INFO 664 - Programming for Cultural Heritage Final Project
 <img src="https://github.com/sunniw/NYCrecycle/blob/e5a0271c1d5796302f6eef6805c104f78d6893ca/banner.png" alt="New York City Recyclable Collection 2010 - 2018">
 
-## New York City Recyclable Collection 2010 - 2018
+## New York City Recyclable Collection 2010-2018
 This project attempts to look at the New York City recycle rate changes over the last decade. It focuses on the two mainstream recyclables: paper and MGP (metal, glass, and plastic). The project uses the US Environmental Protection Agency's data as a benchmark to measure the effectiveness of the NYC program. Products of this project are three bar charts: NYC collection rate, national collection rate, and a comparison of the two datasets. Please note that the final comparison is only up to 2018, as the EPA data does not provide later years' information.
 
 ## Dataset used
