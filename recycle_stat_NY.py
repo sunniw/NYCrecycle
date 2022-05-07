@@ -7,7 +7,6 @@
 # =================================================================================
 
 import plotly.express as px
-#import csv
 import pandas as pd
 
 # NYC solid waste management dataset from NYC Open Data
@@ -53,9 +52,6 @@ NYCmswTotal["MSW TOTAL"] = NYCmswTotal[NYCp_cols].sum(axis=1)
 NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"]
 NYCmswTotal["MGP COLLECTED"] = NYCmswTotal["MGPTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"]
 NYCmswTotal["NON-RECYCLABLE & OTHERS"] = 1 - NYCmswTotal["PAPER COLLECTED"] - NYCmswTotal["MGP COLLECTED"]
-
-#print(NYCmswTotal)
-#print(NYCp_cols)
 
 # Show NYC bar chart
 # Numbers presented as percentage with 2 decimal places
