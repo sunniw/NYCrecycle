@@ -103,7 +103,8 @@ USp_cols.remove("YEAR")
 #print(USmswTotal)
 
 # Show US bar chart
-# float number is formatted as % with 2 digits behind decimal
+# Numbers presented as percentage with 2 decimal places
+# Reversed legend order to adhere to bar chart order.
 
 USbarcolor = {"PAPER COLLECTED" : "#7AC142",
               "PLASTICS COLLECTED" : "#0093D0",
@@ -118,4 +119,7 @@ fig = px.bar(USmswTotal,
         color_discrete_sequence = [*USbarcolor.values()],
         title="Municipal Recyclable and Waste Collection Rate of the United States, 2010-2018",
         text_auto=".2%")
+
+fig.update_layout(legend_traceorder="reversed")
+
 fig.show()

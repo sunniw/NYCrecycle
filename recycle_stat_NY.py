@@ -50,14 +50,17 @@ NYCmswTotal["NON-RECYCLABLE & OTHERS"] = 1 - NYCmswTotal["PAPER COLLECTED"] - NY
 #print(NYCp_cols)
 
 # Show NYC bar chart
-# float number is formatted as % with 2 digits behind decimal
+# Numbers presented as percentage with 2 decimal places
+# Reversed legend order to adhere to bar chart order.
 
 fig = px.bar(NYCmswTotal, 
         x = "YEAR", 
         y = ["PAPER COLLECTED", "MGP COLLECTED", "NON-RECYCLABLE & OTHERS"], 
-        color_discrete_sequence = ["#42C24A", "#2A9FD1", "#FFB47A"],
+        color_discrete_sequence = ["#7AC142", "#0093D0", "#FFA15A"],
         title = "Municipal Recyclable and Waste Collection Rate of the New York City, 2010-2022",
         labels = {"value" : "Percentage to total waste", "YEAR" : "Year"}, 
         text_auto = ".2%")
+
+fig.update_layout(legend_traceorder="reversed")
 
 fig.show()
