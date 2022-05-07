@@ -1,15 +1,17 @@
+# =================================================================================
+# INFO-664-02 Programing for Cultural Heritage 22/SP - Sunni Wong
+# Final Project: New York City Recyclable Collection 2010-2018
+# Part 3: Comparison of Municipal Recyclable and Waste Collection Rate of NYC and US, 2010-2018
+# This script uses the two datasets (USmswTotal_p.csv and NYCmswTotal_p.csv) created 
+# in recycle_stat_NY.py and recycle_stat_US.py.
+# If running this script alone, please download the two new datasets from GitHub,
+# and save them in the same directory with this script.
+# =================================================================================
+
 import csv
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-
-# =================================================================================
-# Compare the NYC recycle collection rate with national rate
-# Uses the two datasets (USmswTotal_p.csv and NYCmswTotal_p.csv) created in 
-# recycle_stat_NY.py and recycle_stat_US.py.
-# If running this script alone, please download the two new datasets from GitHub,
-# and save them in the same directory with this script.
-# =================================================================================
 
 # =================================================================================
 # US data
@@ -24,8 +26,16 @@ USmswTotal.rename(columns={
     "Products - Glass": "GLASS COLLECTED",
     "Products - Metals - Total": "METALS COLLECTED",
     "Products - Plastics": "PLASTICS COLLECTED",
-    "Non-Recyclable & Others": "NON-RECYCLABLE & OTHERS"
+    "Non-Recyclable & Others": "NON-RECYCLABLE & OTHERS",
+    "Total MSW Generated - Weight" : "MSW TOTAL"
 }, inplace=True)
+
+# Calculate percentage of each material to total weight
+USmswTotal["PAPER COLLECTED"] = USmswTotal["PAPER COLLECTED"] / USmswTotal["MSW TOTAL"] * 100
+USmswTotal["GLASS COLLECTED"] = USmswTotal["GLASS COLLECTED"] / USmswTotal["MSW TOTAL"] * 100
+USmswTotal["METALS COLLECTED"] = USmswTotal["METALS COLLECTED"] / USmswTotal["MSW TOTAL"] * 100
+USmswTotal["PLASTICS COLLECTED"] = USmswTotal["PLASTICS COLLECTED"] / USmswTotal["MSW TOTAL"] * 100
+USmswTotal["NON-RECYCLABLE & OTHERS"] = 100 - USmswTotal["PAPER COLLECTED"] - USmswTotal["GLASS COLLECTED"] - USmswTotal["METALS COLLECTED"] - USmswTotal["PLASTICS COLLECTED"]
 
 # Swap plastic and paper columns
 cols = list(USmswTotal.columns)
@@ -36,6 +46,7 @@ USmswTotal = USmswTotal[cols]
 # Selecting columns to compare
 USp_cols = list(USmswTotal)
 USp_cols.remove("YEAR")
+USp_cols.remove("MSW TOTAL")
 
 # =================================================================================
 # NYC data
@@ -83,7 +94,11 @@ fig = go.Figure()
 fig.update_layout(
     title = "Comparison of Municipal Recyclable and Waste Collection Rate of NYC and US, 2010-2018",
     xaxis = dict(title_text = "Year"),
-    yaxis = dict(title_text = "Percentage"),
+    yaxis = dict(title_text = "Percentage",
+                tickmode = "array",
+                tickvals = [0,20,40,60,80,100],
+                ticktext = ["0", "20%", "40%", "60%", "80%", "100%"]),
+    legend_title_text = "Types of Materials",
     barmode = "stack",
 )
 

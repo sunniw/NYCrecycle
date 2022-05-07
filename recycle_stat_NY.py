@@ -1,5 +1,13 @@
+# =================================================================================
+# INFO-664-02 Programing for Cultural Heritage 22/SP - Sunni Wong
+# Final Project: New York City Recyclable Collection 2010-2018
+# Part 1: NYC Municipal Recyclable and Waste Collection Rate, 2010-2022
+# Data set: DSNY Monthly Tonnage Data from NYC Open Data
+# https://data.cityofnewyork.us/City-Government/DSNY-Monthly-Tonnage-Data/ebb7-mvp5
+# =================================================================================
+
 import plotly.express as px
-import csv
+#import csv
 import pandas as pd
 
 # NYC solid waste management dataset from NYC Open Data
@@ -39,7 +47,7 @@ NYCmswTotal.reset_index(drop=True, inplace=True)
 NYCp_cols = list(NYCmswTotal)
 NYCp_cols.remove("YEAR")
 
-# Calculate percentage and write to new file
+# Calculate percentage and create bar chart
 
 NYCmswTotal["MSW TOTAL"] = NYCmswTotal[NYCp_cols].sum(axis=1)
 NYCmswTotal["PAPER COLLECTED"] = NYCmswTotal["PAPERTONSCOLLECTED"] / NYCmswTotal["MSW TOTAL"]
@@ -57,10 +65,17 @@ fig = px.bar(NYCmswTotal,
         x = "YEAR", 
         y = ["PAPER COLLECTED", "MGP COLLECTED", "NON-RECYCLABLE & OTHERS"], 
         color_discrete_sequence = ["#7AC142", "#0093D0", "#FFA15A"],
-        title = "Municipal Recyclable and Waste Collection Rate of the New York City, 2010-2022",
+        title = "New York City Municipal Recyclable and Waste Collection Rate, 2010-2022",
         labels = {"value" : "Percentage to total waste", "YEAR" : "Year"}, 
         text_auto = ".2%")
 
-fig.update_layout(legend_traceorder="reversed")
+fig.update_layout(legend_traceorder="reversed",
+                    legend_title="Types of Materials",
+                    yaxis = dict(
+                        tickmode = "array",
+                        tickvals = [0,0.2,0.4,0.6,0.8,1],
+                        ticktext = ["0", "20%", "40%", "60%", "80%", "100%"]
+                  )
+                  )
 
 fig.show()
