@@ -19,9 +19,9 @@ banner.png | Project header image.
 barchart_NY.png | Stacked bar chart created from recycle_stat_NY.py.
 barchart_US.png | Stacked bar chart created from recycle_stat_US.py.
 barchart_compare.png | Combined stacked bar chart created from recycle_stat.py.
-recycle_stat.py | Main script to compare NYC and US datasets in a stacked bar chart. Should run **AFTER** the next two scripts if not downloading the checkpoint datasets from this list.
-recycle_stat_NY.py | Script handling the NYC data and create a new csv file and a visual.
-recycle_stat_US.py | Script handling the EPA data to create a new csv file and a visual.
+recycle_stat.py | Main script to compare NYC and US datasets in a stacked bar chart.
+recycle_stat_NY.py | Script handling the NYC data and create a new csv file and a visual. Should run **BEFORE** recycle_stat.py.
+recycle_stat_US.py | Script handling the EPA data to create a new csv file and a visual. Should run **BEFORE** recycle_stat.py.
 
 ### To use the scripts
 All scripts are written in Python 3. The resulting charts will be opened in a web browser upon running the scripts. To run locally, please download the two original datasets from sources listed in previous section, the latest version of Python, and the following modules installed:
