@@ -2,7 +2,7 @@
 <img src="https://github.com/sunniw/NYCrecycle/blob/8698cb43ffc15e81a87ee1ac30e225f9c8dc8e03/banner.png" alt="New York City Recyclable Collection 2010 - 2018">
 
 ### New York City Recyclable Collection 2010-2018
-This project attempted to look at the New York City recycle rate changes over the last decade. It focused on the two mainstream recyclables: paper and MGP (metal, glass, and plastic). The project used the US Environmental Protection Agency's data as a benchmark to measure the effectiveness of the NYC program. Products of this project were three bar charts: NYC collection rate, national collection rate, and a comparison of the two. As the EPA data covered only up to 2018, the final comparison did not include the latest three years of the NYC data.
+This project attempts to look at the New York City recycle rate changes over the last decade. It focuses on the two mainstream recyclables: paper and MGP (metal, glass, and plastic). The project uses the US Environmental Protection Agency's data as a benchmark to measure the effectiveness of the NYC program. Products of this project are three bar charts: NYC collection rate, national collection rate, and a comparison of the two. As the EPA data covers only up to 2018, the final comparison does not include the latest three years of the NYC data.
 
 ### Dataset used
 1. [DSNY Monthly Tonnage Data](https://data.cityofnewyork.us/City-Government/DSNY-Monthly-Tonnage-Data/ebb7-mvp5) - NYC Open Data<br>
@@ -34,6 +34,6 @@ All scripts are written in Python 3. The resulting charts will be opened in a we
 This project produces three stacked bar charts.
 <img src="https://github.com/sunniw/NYCrecycle/blob/9e8852e92448395aa82e8576fe293b9c70a4f72d/barchart_NY.png" width = "800px" alt="Municipal Recyclable and Waste Collection Rate of the New York City, 2010-2022"></br>
 <img src="https://github.com/sunniw/NYCrecycle/blob/9e8852e92448395aa82e8576fe293b9c70a4f72d/barchart_US.png" width = "800px" alt="Municipal Recyclable and Waste Collection Rate of the United States, 2010-2018"></br>
-When reading separately, New York shows a slow annual increase in collecting recyclables. The total reached the highest point of 19.78% (9.35% in Paper and 10.43% in MGP) in 2020, then declined in the next two years. While nationally, the total collection of recyclables declined slowly, and reached the lowest point of 48.2% on 2018.
+When reading separately, New York shows a slow annual increase in collecting recyclables. The total reached the highest point of 19.78% (9.35% in Paper and 10.43% in MGP) of the total waste collected in 2020, then declined in the next two years. While nationally, the total collection of recyclables declined slowly, and reached the lowest percentage of 48.2% on 2018.
 <img src="https://github.com/sunniw/NYCrecycle/blob/9e8852e92448395aa82e8576fe293b9c70a4f72d/barchart_compare.png" width = "800px" alt="Comparison of Municipal Recyclable and Waste Collection Rate of NYC and US, 2010-2018"></br>
-When comparing side-by-side, New York's collection of paper and MGP continued to be dwarfed by the national percentage. Even in its worst year, the national collection rate of paper and MGP still more than double to the New York's. It shows the City has rooms to improve its recycle program.
+When comparing side-by-side, New York's collection of paper and MGP continued to be dwarfed by the national percentage. Even in its worst year, the national collection rate of paper and MGP still more than double to New York's. It shows the that City has rooms to improve its recycle program.
